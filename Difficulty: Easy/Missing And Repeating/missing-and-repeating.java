@@ -39,29 +39,34 @@ class Solution {
         
         
         ArrayList<Integer> ans = new ArrayList<>();
-        int hash[]=new int[arr.length+1];
+        long n = arr.length; 
         
-        
-        for(int i=0;i<arr.length;i++)
-        {
-            hash[arr[i]]++;
+        long SN = (n * (n + 1)) / 2;
+        long S2N = (n * (n + 1) * (2 * n + 1)) / 6;
+
+
+        long S = 0, S2 = 0;
+        for (int i = 0; i < n; i++) {
+            S += arr[i];
+            S2 += (long)arr[i] * (long)arr[i];
         }
-        
-        for(int i=1;i<arr.length+1;i++)
-        {
-            if(hash[i]>1)
-            {
-                ans.add(i);
-            }
-        }
-        
-        for(int i=1;i<=arr.length;i++)
-        {
-            if(hash[i]==0)
-            {
-                ans.add(i);
-            }
-        }
+
+
+        long val1 = S - SN;
+
+
+        long val2 = S2 - S2N;
+
+
+        val2 = val2 / val1;
+
+
+
+        long x = (val1 + val2) / 2;
+        long y = x - val1;
+
+        ans.add((int)x);
+        ans.add((int)y);
         return ans;
     }
 }
