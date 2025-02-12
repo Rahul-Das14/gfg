@@ -37,31 +37,31 @@ class Solution {
     // Function to find two elements in array
     ArrayList<Integer> findTwoElement(int arr[]) {
         
-       // Function to find two elements in array
+        
         ArrayList<Integer> ans = new ArrayList<>();
-        int n = arr.length;
-
-        // Create a frequency array
-        int count[] = new int[n + 1];
-        for (int i = 0; i < n; i++) {
-            count[arr[i]]++;
+        int hash[]=new int[arr.length+1];
+        
+        
+        for(int i=0;i<arr.length;i++)
+        {
+            hash[arr[i]]++;
         }
-
-        // Find the duplicate and missing numbers
-        int duplicate = -1;
-        int missing = -1;
-        for (int i = 1; i <= n; i++) {
-            if (count[i] == 0) {
-                missing = i;
-            } else if (count[i] > 1) {
-                duplicate = i;
+        
+        for(int i=1;i<arr.length+1;i++)
+        {
+            if(hash[i]>1)
+            {
+                ans.add(i);
             }
         }
-
-        ans.add(duplicate);
-        ans.add(missing);
-
-        return ans;
         
+        for(int i=1;i<=arr.length;i++)
+        {
+            if(hash[i]==0)
+            {
+                ans.add(i);
+            }
+        }
+        return ans;
     }
 }
