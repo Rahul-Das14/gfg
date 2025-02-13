@@ -21,55 +21,60 @@ class Sorting {
 // User function Template for Java
 
 class Solution {
-
+    
     private static int merge(int[] arr, int low, int mid, int high) {
-        ArrayList<Integer> temp = new ArrayList<>(); // Temporary ArrayList
-        int left = low;      // Starting index of left half
-        int right = mid + 1;  // Starting index of right half
+        ArrayList<Integer> temp = new ArrayList<>(); // temporary array
+        int left = low;      // starting index of left half of arr
+        int right = mid + 1;   // starting index of right half of arr
+
+        //Modification 1: cnt variable to count the pairs:
         int cnt = 0;
 
-        // Merge smaller elements first and count inversions
+        //storing elements in the temporary array in a sorted manner//
+
         while (left <= mid && right <= high) {
             if (arr[left] <= arr[right]) {
                 temp.add(arr[left]);
                 left++;
             } else {
                 temp.add(arr[right]);
-                cnt += (mid - left + 1); // Increment inversion count
+                cnt += (mid - left + 1); //Modification 2
                 right++;
             }
         }
 
-        // Append remaining elements from the left subarray
+        // if elements on the left half are still left //
+
         while (left <= mid) {
             temp.add(arr[left]);
             left++;
         }
 
-        // Append remaining elements from the right subarray
+        //  if elements on the right half are still left //
         while (right <= high) {
             temp.add(arr[right]);
             right++;
         }
 
-        // Copy merged elements back to the original array
+        // transfering all elements from temporary to arr //
         for (int i = low; i <= high; i++) {
             arr[i] = temp.get(i - low);
         }
-        return cnt;
+        return cnt; // Modification 3
     }
 
-    private static int mergeSort(int[] arr, int low, int high) {
+    public static int mergeSort(int[] arr, int low, int high) {
         int cnt = 0;
         if (low >= high) return cnt;
-        int mid = (low + high) / 2;
-        cnt += mergeSort(arr, low, mid);  // Recursively sort the left half
-        cnt += mergeSort(arr, mid + 1, high); // Recursively sort the right half
-        cnt += merge(arr, low, mid, high);  // Merge sorted halves and count inversions
+        int mid = (low + high) / 2 ;
+        cnt += mergeSort(arr, low, mid);  // left half
+        cnt += mergeSort(arr, mid + 1, high); // right half
+        cnt += merge(arr, low, mid, high);  // merging sorted halves
         return cnt;
     }
 
     static int inversionCount(int arr[]) {
-        return mergeSort(arr, 0, arr.length - 1);
+        // Count the number of pairs:
+        return mergeSort(arr, 0, arr.length-1);
     }
 }
